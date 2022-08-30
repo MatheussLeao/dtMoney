@@ -1,14 +1,32 @@
-import styled from "styled-components";
+import { useState } from "react";
+import ReactModal from "react-modal";
+import { Dashboard } from "./components/Dashboard";
+import { Header } from "./components/Header";
+import { NewTransactionModal } from "./components/NewTransactionModal";
+import { GlobalStyle } from "./styles/global";
 
-const Title = styled.h1`
-  color: #8257e6;
-  font-size: 64px;
-`;
+ReactModal.setAppElement("#root");
 
 export function App() {
+  const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false);
+
+  const handleOpenNewTransactionModal = () => setIsNewTransactionModalOpen(true);
+
+  const handleCloseNewTransactionModal = () => setIsNewTransactionModalOpen(!isNewTransactionModalOpen);
   return (
-    <div className="App">
-      <Title>Hello World</Title>
-    </div>
+    <>
+      <Header
+        onNewTransactionModal={handleOpenNewTransactionModal}
+      />
+
+      <Dashboard />
+
+      <NewTransactionModal
+        isOpen={isNewTransactionModalOpen}
+        onRequestClose={handleCloseNewTransactionModal}
+      />
+      
+      <GlobalStyle />
+    </>
   );
 }
